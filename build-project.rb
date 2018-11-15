@@ -97,7 +97,7 @@ if classes_to_make.length > 0
   puts '......................'
 
   classes_to_make.each do |input_class|
-    project_spec_file.write("describe('#{input_class}') do \n\nend\n\n")
+    project_spec_file.write("describe('#{input_class}') do \n\n  it('tests a method for #{input_class}') do\n\n    dummy = #{input_class}.new()\n\n    expect(dummy.method()).to(eq(expected result))\n\n  end\n\nend\n\n")
     puts "#{input_class} spec added"
   end
   project_spec_file.close()
