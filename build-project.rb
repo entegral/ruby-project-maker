@@ -4,9 +4,10 @@ require 'fileutils'
 # Create project directory and declare variables for I/O
 puts '---------------------------------------------------------------------'
 puts 'This script will create your project in the directory it is ran in!'
-print '          What would you like to call your project? '
+puts '          What would you like to call your project? '
 puts '---------------------------------------------------------------------'
-project_file = gets.chomp
+project_name = gets.chomp
+project_root = '../' + project_name
 
 lib_path = FileUtils.mkdir_p project_root + '/lib/'
 spec_path = FileUtils.mkdir_p project_root + '/spec/'
@@ -17,7 +18,11 @@ gemfile = File.open(project_root + '/Gemfile', 'a')
 FileUtils.touch project_root + '/.gitignore'
 git_ignore = File.open(project_root + '/.gitignore', 'a')
 git_ignore.write("*.lock")
+
+puts '-------------------------------------------------------------------------------'
 puts 'Git repo initialized and *.lock files added to ' + project_root + '/.gitignore'
+puts '-------------------------------------------------------------------------------'
+
 system('cd ' + project_root + ' && git init && git add . && git commit -m "initial commit" && cd ..')
 
 
