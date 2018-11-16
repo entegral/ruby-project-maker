@@ -4,7 +4,7 @@
 # create a branch called "backup" every 20-30 minutes (exact time is randomized),
 # then it will switch to it, stage and commit all of your changes (unless they are added to
 # your .gitignore), then switch back to your previous branch, merge it and delete the
-# backup branch. This should maintain a consistent backup schedule without incurring
+# backup branch. This should maintain a consistent backup schedule without encountering
 # any merge conflicts.
 
 def check_branch
@@ -41,12 +41,14 @@ def backup()
 
 end
 
-# on first run, determine current branch, create backup branch, add commit,
-# then switch back to previous branch
+# User inputs a number of minutes as an interval for commit backups
+puts "Please enter an approximate backup_interval (in minutes)."
+puts "Your commits will occur between 100% and 75% of your backup_interval."
+
+desired_interval_in_minutes = gets.chomp.to_i
 
 while true
-  # generate random number of minutes between 10 and 20
   backup()
-  backup_interval = 600 + (rand(20) * 60)
+  backup_interval = (desired_interval_in_minutes * 3/4 * 60) + (rand(desired_interval_in_minutes) * 1/4 * 60)
   sleep(backup_interval)
 end
