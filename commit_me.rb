@@ -26,7 +26,6 @@ def backup()
   time_instance = Time.now.to_i.to_s
 
   puts "--------------------------------------------------------------"
-  puts "--------------------------------------------------------------"
   puts "BACKING UP ---------------------------------------------------"
   puts "BACKUP ID = " + time_instance
   previous_branch = check_branch
@@ -36,6 +35,7 @@ def backup()
   system("git checkout #{previous_branch}")
   puts "backup complete"
   puts "returning to: " + previous_branch
+  puts "--------------------------------------------------------------"
 end
 
 # on first run, determine current branch, create backup branch, add commit,
