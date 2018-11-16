@@ -27,10 +27,10 @@ def backup()
 
   puts "--------------------------------------------------------------"
   puts "--------------------------------------------------------------"
-  puts "backing up......"
+  puts "BACKING UP ---------------------------------------------------"
+  puts "BACKUP ID = " + time_instance
   puts "--------------------------------------------------------------"
   puts "--------------------------------------------------------------"
-  puts "backup ID: " + time_instance
   previous_branch = check_branch
   puts "previous branch: " + previous_branch
   puts "next branch ID: " + time_instance
