@@ -28,13 +28,18 @@ def backup()
   puts "--------------------------------------------------------------"
   puts "--------------------------------------------------------------"
   puts "backing up......"
-
+  puts "--------------------------------------------------------------"
+  puts "--------------------------------------------------------------"
   puts "backup ID: " + time_instance
   previous_branch = check_branch
   puts "previous branch: " + previous_branch
   puts "next branch ID: " + time_instance
+  puts "--------------------------------------------------------------"
+  puts "--------------------------------------------------------------"
   system("git checkout -b backup-#{time_instance} &&  git add . && git commit -m \"automated backup: ID = #{time_instance}\" && git checkout #{previous_branch} && git merge backup-#{time_instance}")
   system("git checkout #{previous_branch}")
+  puts "--------------------------------------------------------------"
+  puts "--------------------------------------------------------------"
   puts "backup complete"
   puts "returning to: " + previous_branch
   puts "--------------------------------------------------------------"
