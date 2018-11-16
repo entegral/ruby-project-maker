@@ -48,5 +48,4 @@ while true
   # backup_interval = 600 + (Math.random * 60 * 20)
   backup_interval = 5 + rand(5)
   sleep(backup_interval)
-  backup_ID = backup_ID + 1
 end
