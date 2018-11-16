@@ -23,19 +23,20 @@ end
 
 
 def backup()
+  time_instance = Time.now.to_i.to_s
 
   puts "--------------------------------------------------------------"
   puts "--------------------------------------------------------------"
   puts "backing up......"
-  puts "timestamp: " + Time.now.to_s
 
-  current_branch = check_branch
-  puts "current branch: " + current_branch
-  time_instance = Time.now.to_i
-  puts time_instance
-  system("git checkout -b backup-#{time_instance} &&  git add . && git commit -m 'automated backup' && git checkout #{current_branch} && git merge backup-#{time_instance}")
-
+  puts "backup ID: " + time_instance
+  previous_branch = check_branch
+  puts "previous branch: " + previous_branch
+  puts "next branch ID: " + time_instance
+  system("git checkout -b backup-#{time_instance} &&  git add . && git commit -m \"automated backup: ID = #{time_instance}\" && git checkout #{previous_branch} && git merge backup-#{time_instance}")
+  system("git checkout #{previous_branch}")
   puts "backup complete"
+  puts "returning to: " + previous_branch
   puts "--------------------------------------------------------------"
   puts "--------------------------------------------------------------"
 end
