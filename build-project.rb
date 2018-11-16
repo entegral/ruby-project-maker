@@ -25,10 +25,6 @@ puts '--------------------------------------------------------------------------
 
 system('cd ' + project_root + ' && git init && git add . && git commit -m "initial commit" && cd ..')
 
-
-FileUtils.touch project_root + '/lib/ruby.rb'
-project_file = File.open(project_root + '/lib/ruby.rb', 'a')
-
 FileUtils.touch project_root + '/spec/ruby_spec.rb'
 project_spec_file = File.open(project_root + '/spec/ruby_spec.rb', 'a')
 
@@ -78,11 +74,13 @@ if classes_to_make.length > 0
   puts '..................'
 
   classes_to_make.each do |input_class|
+    project_file = File.open(project_root + "/lib/#{input_class}.rb", 'a')
     project_file.write("class " + input_class + "\n\nend\n\n\n")
     puts "#{input_class} class added"
+    project_file.close()
   end
-  project_file.close()
 else
+  FileUtils.touch project_root + '/lib/ruby.rb'
   puts '..............................'
   puts 'No classes will be created...'
   puts '..............................'
@@ -91,17 +89,27 @@ end
 
 # Create spec file and fill with example spec for classes
 
+project_spec_file.write("require ('rspec')\nrequire ('pry')\n")
+
+
 if classes_to_make.length > 0
   puts '......................'
   puts 'Creating class specs .'
   puts '......................'
 
   classes_to_make.each do |input_class|
+    project_spec_file.write("require ('#{input_class}')\n")
+  end
+  project_spec_file.write("\n\n")
+
+  classes_to_make.each do |input_class|
     project_spec_file.write("describe('#{input_class}') do \n\n  it('tests a method for #{input_class}') do\n\n    dummy = #{input_class}.new()\n\n    expect(dummy.method()).to(eq(expected result))\n\n  end\n\nend\n\n")
     puts "#{input_class} spec added"
   end
   project_spec_file.close()
-
+else
+  project_spec_file.write("require ('ruby')")
+  project_spec_file.close()
 end
 
 
