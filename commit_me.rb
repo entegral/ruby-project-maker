@@ -28,7 +28,7 @@ def backup()
   puts "BACKING UP ---------------------------------------------------"
   previous_branch = check_branch
   puts "previous branch: " + previous_branch
-  system("git checkout -b backup &&  git add . && git commit -m \"automated backup\" && git checkout #{previous_branch} && git merge backup")
+  system("git checkout -b backup &&  git add . && git commit -m \"automated backup fail-safe\" && git checkout #{previous_branch} && git merge backup")
   system("git checkout #{previous_branch}")
   puts "backup complete"
   puts "removing backup branch"
