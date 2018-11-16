@@ -1,9 +1,11 @@
 #!/usr/bin/env ruby
 
 # Navigate to the root of your project directory and run this script. It will
-# create a branch called "backup" and randomly (every 20-30 minutes) switch to,
- # stage and commit all of your changes (unless they are added to your .gitignore).
-# It will then switch back to your current branch.
+# create a branch called "backup" every 20-30 minutes (exact time is randomized),
+# then it will switch to it, stage and commit all of your changes (unless they are added to
+# your .gitignore), then switch back to your previous branch, merge it and delete the
+# backup branch. This should maintain a consistent backup schedule without incurring
+# any merge conflicts.
 
 def check_branch
 
