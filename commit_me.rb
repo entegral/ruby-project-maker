@@ -45,6 +45,6 @@ end
 while true
   # generate random number of minutes between 10 and 20
   backup()
-  backup_interval = 600 + (Math.random * 60 * 20)
+  backup_interval = 600 + (rand(20) * 60)
   sleep(backup_interval)
 end
