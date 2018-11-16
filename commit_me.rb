@@ -17,40 +17,36 @@ def check_branch
       branch = branch.join
       puts "current branch = " + branch
       return branch
-    else
-      puts "current branch not found, backing up to master"
-      return "master"
     end
   end
 end
 
 
-def backup(first_or_not, current_branch)
-  if first_or_not == "first"
-    system("git checkout -b backup &&  git add . && git commit -m 'automated backup' && git checkout #{current_branch}")
-  else
-    system("git checkout backup &&  git add . && git commit -m 'automated backup' && git checkout #{current_branch}")\
-  end
+def backup()
+
+  puts "--------------------------------------------------------------"
+  puts "--------------------------------------------------------------"
+  puts "backing up......"
+  puts "timestamp: " + Time.now.to_s
+
+  current_branch = check_branch
+  puts "current branch: " + current_branch
+  time_instance = Time.now.to_i
+  puts time_instance
+  system("git checkout -b backup-#{time_instance} &&  git add . && git commit -m 'automated backup' && git checkout #{current_branch} && git merge backup-#{time_instance}")
+
+  puts "backup complete"
+  puts "--------------------------------------------------------------"
+  puts "--------------------------------------------------------------"
 end
 
 # on first run, determine current branch, create backup branch, add commit,
 # then switch back to previous branch
-current_branch = check_branch()
-backup("first", current_branch)
 
 while true
   # generate random number of minutes between 10 and 20
   # backup_interval = 600 + (Math.random * 60 * 20)
-  backup_interval = 5 + (Math.random * 5)
+  backup
+  backup_interval = 5 + rand(5)
   sleep(backup_interval)
-  puts "--------------------------------------------------------------"
-  puts "--------------------------------------------------------------"
-  puts "backing up......"
-  puts "timestamp: " + time.now()
-  current_branch = check_branch()
-  puts "current branch: " + current_branch
-  backup(false, current_branch)
-  puts "backup complete"
-  puts "--------------------------------------------------------------"
-  puts "--------------------------------------------------------------"
 end
