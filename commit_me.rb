@@ -22,20 +22,23 @@ def check_branch
 end
 
 
-def backup()
-  time_instance = Time.now.to_i.to_s
+def backup(backup_ID)
 
   puts "--------------------------------------------------------------"
   puts "BACKING UP ---------------------------------------------------"
-  puts "BACKUP ID = " + time_instance
+  puts "BACKUP ID = " + backup_ID.to_s
   previous_branch = check_branch
   puts "previous branch: " + previous_branch
-  puts "next branch ID: " + time_instance
-  system("git checkout -b backup-#{time_instance} &&  git add . && git commit -m \"automated backup: ID = #{time_instance}\" && git checkout #{previous_branch} && git merge backup-#{time_instance}")
+  puts "next branch ID: " + backup_ID.to_s
+  system("git checkout -b backup-#{backup_ID} &&  git add . && git commit -m \"automated backup: ID = #{backup_ID}\" && git checkout #{previous_branch} && git merge backup-#{backup_ID}")
   system("git checkout #{previous_branch}")
   puts "backup complete"
+  puts "cleaning up orphaned backup branch"
+  system("git branch -D `git branch | grep -E 'backup*'`")
+  puts "backup branches cleaned"
   puts "returning to: " + previous_branch
   puts "--------------------------------------------------------------"
+
 end
 
 # on first run, determine current branch, create backup branch, add commit,
@@ -43,8 +46,10 @@ end
 
 while true
   # generate random number of minutes between 10 and 20
+  backup_ID = 1
+  backup(backup_ID)
   # backup_interval = 600 + (Math.random * 60 * 20)
-  backup
   backup_interval = 5 + rand(5)
   sleep(backup_interval)
+  backup_ID = backup_ID + 1
 end
