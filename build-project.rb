@@ -23,6 +23,10 @@ project_root = '../' + project_name
 
 FileUtils.mkdir_p project_root + '/lib/'
 FileUtils.mkdir_p project_root + '/spec/'
+FileUtils.mkdir_p project_root + '/public/'
+FileUtils.mkdir_p project_root + '/views/'
+system('cp ' + './README.template ' + project_root + '/README.md')
+
 
 FileUtils.touch project_root + '/Gemfile'
 gemfile = File.open(project_root + '/Gemfile', 'a')
@@ -54,6 +58,7 @@ contributors = gets.chomp
 
 gemfile.write("source 'https://rubygems.org'\n")
 gemfile.write("\n")
+gemfile.write("gem 'sinatra'\n")
 gemfile.write("gem 'rspec'\n")
 gemfile.write("gem 'pry'\n")
 if contributors == "2"
